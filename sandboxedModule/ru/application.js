@@ -14,6 +14,11 @@ setTimeout(function () {
     console.log('Timeout!!!');
 }, 5000);
 
+util.log('Date and time info.');
+console.log('Is 1 a symbol? - ' + util.isSymbol(1));
+console.log('Is symbol LOL a symbol(obviously)? - '
+             + util.isSymbol(Symbol('LOL')));
+
 module.exports = function () {
   // Вывод из контекста экспортируемой функции
     console.log('From application exported function');
