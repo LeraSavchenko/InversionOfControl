@@ -8,22 +8,33 @@ var fs = require('fs'),
     vm = require('vm'),
     util = require('util');
 
-// Создаем контекст-песочницу, которая станет глобальным контекстом приложения
-var context = { module: {}, 
-               console: console,
-               setInterval: setInterval,
-               setTimeout: setTimeout,
-               clearInterval: clearInterval,
-               util: util
-              };
-context.global = context;
-var sandbox = vm.createContext(context);
+//Creating new sandbox with a global
+//context for the application.
+function newSandbox() {
+    var context = { module: {},
+                    console: console,
+                    setInterval: setInterval,
+                    setTimeout: setTimeout,
+                    clearInterval: clearInterval,
+                    util: util
+                    };
+    context.global = context;
+    return vm.createContext(context);
+}
 
-// Читаем исходный код приложения из файла
-var fileName = './application.js';
-fs.readFile(fileName, function(err, src) {
+function runApp(appName) {
+    var fileName = appName;
+  }
+
+fs.readFile(fileName, function (err, src) {
   // Тут нужно обработать ошибки
-  
+ if (err) {
+    console.error(`Something is wrong with the "${appName}" app.`);
+    return;
+ }
+  //Новый сендбокс для приложения 
+  var sandbox = newSandbox();
+    
   // Запускаем код приложения в песочнице
   var script = vm.createScript(src, fileName);
   script.runInNewContext(sandbox);
@@ -31,3 +42,7 @@ fs.readFile(fileName, function(err, src) {
   // Забираем ссылку из sandbox.module.exports, можем ее исполнить,
   // сохранить в кеш, вывести на экран исходный код приложения и т.д.
 });
+}
+
+var appName = process.argv[2] || 'application';
+runApp(appName);
