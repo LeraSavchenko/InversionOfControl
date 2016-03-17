@@ -5,19 +5,12 @@
 // Вывод из глобального контекста модуля
 console.log('From application global context');
 
-var interval = setInterval(function () {
-    console.log('Hello from timer!');
-}, 1000);
-
-setTimeout(function () {
-    clearInterval(interval);
-    console.log('Timeout!!!');
-}, 5000);
-
-util.log('Date and time info.');
 console.log('Is 1 a symbol? - ' + util.isSymbol(1));
 console.log('Is symbol LOL a symbol(obviously)? - '
              + util.isSymbol(Symbol('LOL')));
+
+//Task 9
+//console.dir(global);
 
 module.exports = function () {
   // Вывод из контекста экспортируемой функции
